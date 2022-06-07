@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+vector<vector<long long int>> printPascal(int n) 
+{
+  // Write your code here.
+    vector<vector<long long int>> r(n);
+    for(int i=0;i<n;i++){
+        r[i].resize(i+1);  //resizing the vector of i + 1 size
+        r[i][0] = r[i][i] = 1;  // first and last value of row will be 1
+        
+        for(int j=1;j<i;j++){
+            r[i][j] = r[i-1][j-1] + r[i-1][j];  // compute row values using previous rows
+        }
+    }
+     return r;
+}
+
+
+
+steps are written 
+learned that how to calculate ncr usnign shortcut
+and formula to calculate element at every column  r-1 C c-1  in each row
+
+Questions can be asked that 
+1) make pascel triangle
+2) find element at this index in pascel triangle => refer the above  formula
+3) return the row of pascel triangle of a given number => implemented above
