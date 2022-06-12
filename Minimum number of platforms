@@ -1,0 +1,25 @@
+int calculateMinPatforms(int at[], int dt[], int n) {
+    // Write your code here.
+    sort(at, at+n);
+    sort(dt, dt+n);
+    
+    int i,j,platform, result;
+    
+    i = 1; j=0, platform = 1, result=1;// 1 train will require atleast one platform
+    while(i < n && j<n){
+        if(at[i] <= dt[j]){
+            platform++;
+            i++;
+        }
+        else if(at[i] > dt[j]){
+            platform--;
+            j++;
+        }
+        if(platform > result) result = platform;        
+    }
+    return result;
+}
+
+
+steps 
+move j only the train departure time is passed else increase the no of platforms
