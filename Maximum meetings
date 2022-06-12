@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+struct meeting{
+  int start;
+  int end;
+  int position;
+};
+static bool comparator(struct meeting m1, struct meeting m2){
+    if(m1.end < m2.end) return true;
+    else if(m1.end > m2.end) return false;
+    else if(m1.position < m2.position) return true;
+    else return false;
+}
+
+vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
+    // Write your code here.
+    int n = start.size();
+    struct meeting meet[n];
+    for(int i=0;i<n;i++){
+        meet[i].start = start[i], meet[i].end = end[i] , meet[i].position = i+1;
+    }
+    sort(meet,meet+n, comparator);
+    vector<int> ans;
+    int meeting_end_time = meet[0].end;
+    ans.push_back(meet[0].position);
+    for(int i = 1;i<n;i++){
+        if(meet[i].start > meeting_end_time){
+            meeting_end_time = meet[i].end;
+            ans.push_back(meet[i].position);
+        }
+    }
+    return ans;
+}
+
+steps 
+ sort the meting on edning time basis if the time si same then we use the positio to sort 
+ read code to unserstand more
