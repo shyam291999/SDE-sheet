@@ -1,0 +1,30 @@
+bool check_cycle(int src, vector<int> adj[], vector<int> &visit, int parent){
+    visit[src] = 1;
+    for(auto it: adj[src]){
+        if(visit[it]==0){
+            if (check_cycle(it,adj,visit,src)) return true;
+        } 
+        else if(it!=parent) return true;
+    }
+    return false;
+}
+
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+    // Write your code here.
+    vector<int> adj[n+1];
+    
+    for(int i=0;i<m;i++){
+        adj[edges[i][0]].push_back(edges[i][1]);
+        adj[edges[i][1]].push_back(edges[i][0]);
+    }
+    vector<int> visit(n+1,0);
+    for(int i=1;i<=n;i++){
+        if(visit[i] == 0){
+            if(check_cycle(i,adj,visit, -1)){
+                  return "Yes";
+            }
+        }
+    }
+    return "No";
+}
