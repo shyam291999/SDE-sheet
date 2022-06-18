@@ -1,0 +1,63 @@
+/***************************************************************************
+
+	Class for graph node is as follows:
+
+	class graphNode
+	{
+		public:
+    		int data;
+    	vector<graphNode *> neighbours;
+    	graphNode()
+    	{
+        	data = 0;
+        	neighbours = vector<graphNode *>();
+    	}
+
+    	graphNode(int val)
+    	{
+        	data = val;
+        	neighbours = vector<graphNode *>();
+    	}
+
+    	graphNode(int val, vector<graphNode *> neighbours)
+    	{
+        	data = val;
+        	this->neighbours = neighbours;
+    	} 
+	};
+
+******************************************************************************/
+
+void dfs(graphNode* root, graphNode* node, vector<graphNode*> &visited){
+    visited[root->data] = root;
+    for(auto it: node->neighbours){
+       if(visited[it->data] == NULL){
+           graphNode* new_node = new graphNode(it->data);
+           //visited[it->data] = new_node;
+           (root->neighbours).push_back(new_node); // pushing the node itself
+           dfs(new_node, it, visited);    
+       }
+       else{
+           (root->neighbours).push_back(visited[it->data]);  //pushing created node form visited vector;
+       }
+    }
+}
+
+
+graphNode *cloneGraph(graphNode *node)
+{
+    // Write your code here.
+    if(node == NULL) return node;
+    vector<graphNode*> visited(100005,NULL); // store all copy node
+    graphNode* root = new graphNode(node->data);
+    dfs(root,node,visited);
+    return root;
+}
+
+
+
+in this first we will create a vistited array of nodes to store the copied nodes
+create a new node of first node given in question
+add that node in visited array
+if its allready visited then add that node in node adj
+if not then create a new node and add to visited array
