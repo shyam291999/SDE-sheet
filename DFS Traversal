@@ -1,0 +1,102 @@
+#include<bits/stdc++.h>
+
+void dfs( vector<int> adj[], vector<bool> &visit, int src, vector<int> &smallans){
+    visit[src] = 1;
+    smallans.push_back(src);
+    for(auto it: adj[src]){
+        if(!visit[it]){
+           dfs(adj,visit,it,smallans) ;
+        }
+    }
+}
+
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    // Write your code here
+    vector<int> adj[V];  
+    for(int i=0;i<E;i++){
+        adj[edges[i][0]].push_back(edges[i][1]);
+        adj[edges[i][1]].push_back(edges[i][0]);
+    }
+    
+    vector<vector<int>> ans;
+    vector<bool> visit(V,0);
+    for(int i=0;i<V;i++){
+        vector<int> smallans;
+        if(!visit[i]){
+            dfs(adj, visit, i , smallans);
+        }
+        if (smallans.size() == 0) continue;
+        ans.push_back(smallans);
+    }
+    return ans;
+}
+
+
+
+
+
+
+/// 2nd solution 
+
+
+void mapAdjlist(map<int,set<int>>&adjList,vector<vector<int>> &edges)
+{
+    int n=edges.size();
+    for(int i=0;i<n;i++){
+        int u=edges[i][0];
+        int v=edges[i][1];
+        adjList[u].insert(v);
+        adjList[v].insert(u);
+    }
+}
+
+void dfs(map<int,set<int>>&adjList,map<int,int>&visited,int node,vector<int>&v,stack<int>&s,vector<int>&temp){
+    if(visited[node]){
+        return;
+    }
+    s.push(node);
+    visited[node]=1;
+
+        int topnode=s.top();
+           v.push_back(topnode);
+           temp.push_back(topnode);
+            
+        for(auto i:adjList[topnode]){
+            if(visited[i]==0){
+            dfs(adjList,visited,i,v,s,temp);
+            }
+        }
+    
+}
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    map<int,set<int>>adjList;
+    mapAdjlist(adjList,edges);
+    map<int,int>visited;
+    vector<int>v;
+    stack<int>s;
+    vector<vector<int>>ans;
+    
+    for(int i=0;i<V;i++){
+        if(visited[i]==0){
+            vector<int>temp;
+    dfs(adjList,visited,i,v,s,temp);
+            ans.push_back(temp);
+        }
+    }
+ 
+    return ans;
+    
+   
+    // Write your code here
+}
+
+
+
+
+
+
+
+steps same dfs traversal just make a vector for every componenet
+if size is == 0 then dont push
