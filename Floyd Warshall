@@ -1,0 +1,65 @@
+int floydWarshall(int n, int m, int src, int dest, vector<vector<int>> &edges) {
+    // Write your code here.
+    
+    vector<vector<int>> dist(n+1,vector<int>(n+1,1e9));
+    
+    for(auto it: edges){
+        int u = it[0];
+        int v = it[1];
+        int w = it[2];
+        
+        //dist[it[0]][it[1]] = it[2];
+        dist[u][v] = w;
+    }
+    
+    int selfdistance = 1;
+    while(selfdistance <= n){
+        dist[selfdistance][selfdistance] = 0;
+        selfdistance++;
+    }
+    
+    
+    for(int k=1;k<=n;k++){
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=n;j++){
+                if(dist[i][k] == 1e9 || dist[k][j] == 1e9) continue;
+                dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]);
+            }
+        }
+    }
+    return dist[src][dest];
+  
+}
+
+
+
+// vector<vector<int>> dist(n+1, vector<int>(n+1, 1e9));
+//     for(auto it: edges){
+//         dist[it[0]][it[1]] = it[2];
+//     }
+    
+//     int i = 1;
+//     while(i <= n){  //khud se khud tak jane kaa distance 0 hoga
+//         dist[i][i] = 0;
+//         i++;
+//     }
+    
+//     for(int k = 1; k <= n; k++){
+//             for(int i = 1; i <= n; i++){
+//                 for(int j = 1; j <= n; j++){
+//                     if(dist[i][k] == 1e9 || dist[k][j] == 1e9) 
+//                         continue;
+//                     dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+//                 }
+//             }
+//         }
+    
+//      return dist[src][dest];
+
+
+
+
+
+steps
+its an dp kind of graph algorithm  where we keep all nodes shortest path 
+we store shortest paht in a matrix dist and return [src][dist]
