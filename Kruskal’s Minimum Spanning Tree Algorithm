@@ -1,0 +1,53 @@
+#include<algorithm>
+bool comp(vector<int> &a, vector<int> &b){
+    return a[2] < b[2];
+}
+
+int findparent(int u, vector<int> &parent)
+{
+    if(u == parent[u]) return u;
+    return findparent(parent[u], parent);
+}
+
+int union_(int u, int v, vector<int> &parent, vector<int> &rank){
+    u = findparent(u,parent);
+    v = findparent(v, parent);
+    
+    if(rank[u]<rank[v]){
+        parent[v] = u;
+    }
+    else if(rank[v] < rank[u]){
+        parent[u] = v;
+    }
+    else{
+        parent[v] = u;  // or we can do parnet[u] = v;
+        rank[u]++;
+    }
+}
+
+int kruskalMST(int n, int m, vector<vector<int>> &graph) {
+	// Write your code here.
+    
+    sort(graph.begin(), graph.end(),comp);
+    
+    vector<int> parent(n);
+    for(int i=1;i<=n;i++){
+        parent[i] = i;
+    }
+    vector<int> rank(n,0); //level will only join when the rank of both the node is same
+    int cost = 0;
+    
+    for(auto it: graph){
+        if(findparent(it[0], parent) != findparent(it[1], parent)){
+            cost+=it[2];
+            union_(it[0], it[1], parent, rank);
+        }
+    }
+    return cost;
+}
+
+
+steps 
+sort all the edges according to wt
+greedily pickup the shortest edge
+check both node belongs same components or not if not then add else if it in same component don't do any thing
