@@ -1,0 +1,45 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+int find(TreeNode<int> *root, int &diameter){
+    
+    if(root == NULL) return 0;
+    
+    int left = find(root->left, diameter);
+    int right = find(root->right, diameter);
+    
+    diameter = max(diameter, left + right);
+    return 1 + max(left, right);
+}
+
+int diameterOfBinaryTree(TreeNode<int> *root)
+{
+	// Write Your Code Here.
+    
+    int diameter = 0;
+    find(root, diameter);
+    return diameter;
+    
+}
+
+steps 
+we will use the same method which we use to calculate the height of tree
+we will just store the maximum height at every node in diameter
+and we will return the max diameter 
+this is we find the diameter usning the height of tree;
