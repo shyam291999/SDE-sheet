@@ -1,0 +1,44 @@
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+#include<bits/stdc++.h>
+int dfsheight(BinaryTreeNode<int>*root){
+    
+    if(!root) return 0;
+    
+    int left = dfsheight(root->left); 
+    if(left == -1) return -1;  // if any of the node return -1 we will return false
+    int right = dfsheight(root->right);
+    if(right == -1) return -1;  // if any of the node return -1 we will return false
+    
+    if(abs(left - right) > 1) return -1;
+    
+   return max(left, right) + 1;
+    
+}
+
+bool isBalancedBT(BinaryTreeNode<int>* root) {
+    // Write your code here.   
+   return dfsheight(root) != -1; 
+}
+
+
+usign the same logic to finding height of tree
+at every node we will calculate that abs(l - r) > 1;
+if it's true we will reutrn false else true;
