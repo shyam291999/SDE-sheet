@@ -1,0 +1,94 @@
+/************************************************************
+
+    Following is the Binary Tree node structure:
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+#include<bits/stdc++.h>
+
+bool isleaf(TreeNode<int> * root){
+  
+    return root->left==NULL && root->right==NULL;
+
+}
+
+void addleft(TreeNode<int>*root, vector<int> &ans){
+    
+    TreeNode<int>* current_node = root->left;
+    
+    while(current_node){
+        
+        if(!isleaf(current_node)) ans.push_back(current_node -> data);
+        if(current_node -> left)  current_node = current_node->left;
+        else current_node = current_node->right;
+    }
+}
+
+void addright(TreeNode<int> *root, vector<int> &ans){
+    
+    TreeNode<int> *node = root->right;
+    vector<int> temp;
+    
+    while(node){
+        if(!isleaf(node)) temp.push_back(node->data);
+        if(node->right) node = node->right;
+        else node = node->left;
+    }
+    
+    for(int i=temp.size() - 1;i>=0;i--) ans.push_back(temp[i]);
+}
+
+
+// we cannot use levelorder traversal because we cannot get all the leaf node at same level   
+void addleaf(TreeNode<int> *root, vector<int>&ans){
+    
+    if(isleaf(root)) 
+    {
+        ans.push_back(root->data);
+        return; // we get the leaf node in each call then we have to add
+    }
+    
+    if(root->left) addleaf(root->left, ans);
+    if(root->right) addleaf(root->right, ans);
+    
+}
+
+
+vector<int> traverseBoundary(TreeNode<int>* root){
+    // Write your code here.
+    
+    vector<int> ans;
+    if(!root) return ans;
+    if(!isleaf(root)) ans.push_back(root->data);
+    addleft(root, ans);
+    addleaf(root, ans);
+    addright(root, ans);   
+    return ans;
+}
+
+
+steps 
+
+do left traversal first 
+add leaf node if the isleaf fundtion  is true add that node and return
+do right traversal in same way as left but add the node in reverse order
