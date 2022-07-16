@@ -1,0 +1,82 @@
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    template <typename T>
+
+    class BinaryTreeNode
+    {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~BinaryTreeNode() {
+            if (left)
+            {
+                delete left;
+            }
+            if (right)
+            {
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+
+int predecessor(BinaryTreeNode<int>* root, int key){
+    BinaryTreeNode<int>* node =  NULL;
+    int previous_smaller = -1;
+    
+    while(root!=NULL){
+        if(key <= root->data){ // 
+            root = root->left;
+        }
+        else{
+            previous_smaller = root->data;
+            root = root->right;
+        }
+    }
+    return previous_smaller;
+}
+
+int successor(BinaryTreeNode<int>* root, int key){ // ek aage wala imediate greater
+    BinaryTreeNode<int>* node =  NULL;
+    int next_greater = -1;
+    while(root != NULL){
+        if(key >= root->data){//key ka value node.data se greater hai too move right
+            root = root->right;
+        }
+        else{
+            next_greater = root->data;
+            root = root->left;
+        }
+    }
+    return next_greater;
+}
+
+
+pair<int,int> predecessorSuccessor(BinaryTreeNode<int>* root, int key)
+{
+    // Write your code here.
+    pair<int,int> ans;
+    
+    int ans1, ans2;
+    
+    ans1 = predecessor(root, key);
+    ans2 = successor(root, key);
+    
+    
+    return {ans1, ans2};
+    
+}
+
+Successor  means the imediate greater element
+Predecessor  means the previous smaller element
