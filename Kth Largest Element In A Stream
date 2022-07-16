@@ -1,0 +1,35 @@
+
+
+#include<bits/stdc++.h>
+class Kthlargest {
+public:
+    priority_queue<int> pq;
+    Kthlargest(int k, vector<int> &arr) {
+       // Write your code here.
+       for(auto it: arr){
+           pq.push(-it);
+       }
+    }
+
+    void add(int num) {
+        // Write your code here.
+        // we will add the num and pop the top element which is smaller
+        pq.push(-num); // added the new wlement 
+        pq.pop(); // removed the precious smaller element which will come at top after adding num
+    }
+
+    int getKthLargest() {
+       // Write your code here.
+        return -pq.top(); // the greater element will be at top
+    }
+
+};
+
+
+steps 
+
+we will add all the elements in an  greater<>pq;
+qp size is fixed now so the kth element in the pq is kth largest element
+when we add we increase the size of pq ans when we pop we resize the pq to previous so theat the kth grater element will be at top
+if we add an element we will pop the element which is at the top because we want the greater element and at top it will contain the smallest element among all the array
+top will contain the kth largest element above
