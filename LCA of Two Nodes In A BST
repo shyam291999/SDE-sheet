@@ -1,0 +1,75 @@
+# Binary Tree node structure
+class   TreeNode :
+    def __init__(self, data) :
+        self.data = data
+        self.left = None
+        self.right = None
+
+    def __del__(self):
+        if self.left:
+            del self.left
+        if self.right:
+            del self.right
+
+
+def LCAinaBST(root, p, q):
+
+    # Write your code here
+    # P and Q are the given nodes
+    # Return LCA node
+     while(root != None):
+            if(q.data < root.data and p.data < root.data):
+                root = root.left
+            elif(q.data > root.data and p.data > root.data):
+                root = root.right
+            else:
+                return root
+                
+                
+                
+  
+  c++
+                
+ /************************************************************
+    Following is the Binary Search Tree node structure
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+
+TreeNode<int>* LCAinaBST(TreeNode<int>* root, TreeNode<int>* p, TreeNode<int>* q)
+{
+	// Write your code here
+    
+    while (root!=NULL){
+      
+        if(p->data < root->data && q->data < root->data){
+            root = root->left;
+        }
+        else if(p->data > root->data && q->data > root->data){
+            root = root->right;
+        }
+        else{
+             return root;
+        }
+    }
+}
