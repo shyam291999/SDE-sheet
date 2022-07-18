@@ -1,0 +1,53 @@
+int widthOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+    long long int ans= 0;
+    queue<pair<TreeNode*, int>> q;
+    q.push({root, 0});
+    
+    while(!q.empty()){
+        int s = q.size();
+        int mini = q.front().second;
+    
+        long long int last;
+        long long int first;
+        for(int i=0;i<s;i++){
+            long long int current_id = q.front().second - mini;
+            TreeNode* node = q.front().first;
+            q.pop();
+            if(i==0) first = current_id;
+            if(i==s-1) last = current_id;
+            if(node->left) q.push({node->left, current_id * 2 + 1});
+            if(node->right) q.push({node->right, current_id * 2 + 2});
+        }
+        ans = max(ans, last - first + 1);
+    }
+    return ans;
+    }
+    
+    
+    
+    code stdio submission
+    
+    #include<bits/stdc++.h>
+int getMaxWidth(TreeNode<int> *root)
+{
+    // Write your code here.
+    if(root == NULL) return 0;
+    queue<TreeNode<int>*> q;
+    q.push(root);
+    int cnt = 0;
+    while(!q.empty()){
+        int n = q.size();
+        cnt = max(cnt, n);
+        
+        for(int i = 0; i < n; i++){
+            TreeNode<int> *tmp = q.front();
+            q.pop();
+            if(tmp->left) q.push(tmp->left);
+            if(tmp->right) q.push(tmp->right);
+        }
+    }
+    
+    return cnt;
+    
+}
